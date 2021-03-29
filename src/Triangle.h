@@ -2,12 +2,12 @@
 #define TRIANGLE_H
 
 typedef struct Triangle {
-    struct SDL_Point *v0;
-    struct SDL_Point *v1;
-    struct SDL_Point *v2;
+    struct Vec2 *v0;
+    struct Vec2 *v1;
+    struct Vec2 *v2;
 } Triangle;
 
-Triangle *Triangle_Create(struct SDL_Point *v0, struct SDL_Point *v1, struct SDL_Point *v2);
+Triangle *Triangle_Create(struct Vec2 *v0, struct Vec2 *v1, struct Vec2 *v2);
 void Triangle_Render(Triangle *triangle, struct SDL_Renderer *renderer);
 void Triangle_Destroy(Triangle *triangle);
 

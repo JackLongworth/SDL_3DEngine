@@ -2,8 +2,9 @@
 #include <math.h>
 
 #include "Triangle.h"
+#include "Vec2.h"
 
-Triangle *Triangle_Create(SDL_Point *v0, SDL_Point *v1, SDL_Point *v2) 
+Triangle *Triangle_Create(Vec2 *v0, Vec2 *v1, Vec2 *v2) 
 {
     Triangle *triangle = (Triangle *) malloc(sizeof(Triangle));
     triangle->v0 = v0;
@@ -16,7 +17,7 @@ Triangle *Triangle_Create(SDL_Point *v0, SDL_Point *v1, SDL_Point *v2)
 // the point of the flat topped or bottom triangle must be in v2 of the triangle with v0 and v1 ordered 
 // in terms of the x component ( y is obviously the same for each)
 
-void renderFlatBottomOrTopTriangle(SDL_Point *v0, SDL_Point *v1, SDL_Point *v2, SDL_Renderer *renderer)
+void renderFlatBottomOrTopTriangle(const Vec2 *v0, const Vec2 *v1, const Vec2 *v2, SDL_Renderer *renderer)
 {
     const float m02 = (float)(v2->x - v0->x) / (float)(v2->y - v0->y);
     const float m12 = (float)(v2->x - v1->x) / (float)(v2->y - v1->y);
@@ -40,40 +41,18 @@ void renderFlatBottomOrTopTriangle(SDL_Point *v0, SDL_Point *v1, SDL_Point *v2, 
     }
 }
 
-// void RenderFlatTopTriangle(Triangle *triangle, SDL_Renderer *renderer)
-// {
-//     SDL_Point v0 = *triangle->v0;
-//     SDL_Point v1 = *triangle->v1;
-//     SDL_Point v2 = *triangle->v2;
-
-//     const float m10 = (float)(v0.x - v1.x) / (float)(v0.y - v1.y);
-//     const float m20 = (float)(v0.x - v2.x) / (float)(v0.y - v2.y);
-
-//     int yStart = (int) ceilf( v2.y - 0.5f );
-//     int yEnd = (int) ceilf( v0.y - 0.5f );
-
-//     for (int y = yStart; y < yEnd; y++)
-//     {
-//         const float centreOfPixelY = (float) y + 0.5f;
-//         const int leftEdgeX = v1.x + (m10 * (centreOfPixelY - v1.y));
-//         const int rightEdgeX = v2.x + (m20 * (centreOfPixelY - v2.y));
-
-//         SDL_RenderDrawLine(renderer, leftEdgeX, centreOfPixelY, rightEdgeX, centreOfPixelY);
-//     }
-// }
-
-void swap(SDL_Point **p0, SDL_Point **p1) 
+void swap(Vec2 **p0, Vec2 **p1) 
 {
-    SDL_Point *tmp = *p0;
+    Vec2 *tmp = *p0;
     *p0 = *p1;
     *p1 = tmp;
 }
 
 void Triangle_Render(Triangle *triangle, SDL_Renderer *renderer)
 {
-    SDL_Point *v0 = triangle->v0;
-    SDL_Point *v1 = triangle->v1;
-    SDL_Point *v2 = triangle->v2;
+    Vec2 *v0 = triangle->v0;
+    Vec2 *v1 = triangle->v1;
+    Vec2 *v2 = triangle->v2;
 
     // sort the points into ascending y component order
     if (v0->y > v1->y) swap(&v0, &v1);
@@ -98,9 +77,10 @@ void Triangle_Render(Triangle *triangle, SDL_Renderer *renderer)
     {
         // find the splitting line
         const float alpha = (float)(v1->y - v0->y) / (float)(v2->y - v0->y);
-        SDL_Point split;
-        split.x = v0->x + ((v2->x - v0->x) * alpha);
-        split.y = v0->y + ((v2->y - v0->y) * alpha);
+        Vec2 v02 = Vec2_Minus(v2, v0);
+        Vec2_Scale(&v02, alpha);
+        
+        const Vec2 split = Vec2_Add(v0, &v02);
 
         //major right
         if (triangle->v1->x < split.x) 

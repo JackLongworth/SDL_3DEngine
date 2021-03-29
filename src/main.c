@@ -1,5 +1,6 @@
 #include <SDL2/SDL.h>
 #include "Triangle.h"
+#include "Vec2.h"
 
 int main(int argc, char *argv[]) 
 {
@@ -47,15 +48,15 @@ int main(int argc, char *argv[])
             }
         }
 
-        SDL_Point v0;
+        Vec2 v0;
         v0.x = 500.0f;
         v0.y = 100.0f;
 
-        SDL_Point v1;
+        Vec2 v1;
         v1.x = 500.0f;
         v1.y = 200.0f;
 
-        SDL_Point v2;
+        Vec2 v2;
         v2.x = 100.0f;
         v2.y = 300.0f;
         
