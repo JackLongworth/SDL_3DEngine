@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "mat2.h": "c"
+        "mat2.h": "c",
+        "vec2.h": "c",
+        "triangle.h": "c",
+        "screenspacetransformer.h": "c"
     }
 }

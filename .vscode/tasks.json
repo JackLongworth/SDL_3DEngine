@@ -7,9 +7,9 @@
 			"command": "C:\\Program Files\\mingw-w64\\x86_64-8.1.0-posix-seh-rt_v6-rev0\\mingw64\\bin\\g++.exe",
 			"args": [
 				"-g",
-				"src\\*.c",
+				"src\\**.c",
 				"-o",
-				"build\\game.exe",
+				"build\\engine.exe",
 				"-IC:\\dev\\C\\lib\\SDL2-devel-2.0.14-mingw\\SDL2-2.0.14\\x86_64-w64-mingw32\\include",
 				"-LC:\\dev\\C\\lib\\SDL2-devel-2.0.14-mingw\\SDL2-2.0.14\\x86_64-w64-mingw32\\lib",
 				"-lmingw32",
